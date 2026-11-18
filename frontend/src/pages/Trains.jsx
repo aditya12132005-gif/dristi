@@ -64,7 +64,15 @@ export default function Trains() {
   }, {})
 
   const SortTh = ({ k, label }) => (
-    <th onClick={() => toggleSort(k)} style={{ cursor: 'pointer', userSelect: 'none' }}>
+    <th
+      scope="col"
+      role="columnheader"
+      tabIndex={0}
+      aria-sort={sortKey === k ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+      onClick={() => toggleSort(k)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort(k); } }}
+      style={{ cursor: 'pointer', userSelect: 'none' }}
+    >
       {label} {sortKey === k ? (sortAsc ? ' ↑' : ' ↓') : ''}
     </th>
   )
@@ -111,6 +119,8 @@ export default function Trains() {
         {/* ── Filters row ── */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
           <input
+            type="search"
+            aria-label="Search trains by ID, name, or station"
             placeholder="Search train ID, name, station…"
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -122,6 +132,7 @@ export default function Trains() {
             }}
           />
           <select
+            aria-label="Filter trains by railway zone"
             value={zone}
             onChange={e => setZone(e.target.value)}
             style={{
@@ -136,13 +147,14 @@ export default function Trains() {
         {/* ── Main table ── */}
         <div className="card">
           {loading ? (
-            <div className="empty-state">
+            <div className="empty-state" role="status" aria-live="polite">
               <div style={{ width: 24, height: 24, border: '2px solid var(--border)', borderTopColor: 'var(--blue)', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 12 }} />
               <div className="empty-state-sub">Loading telemetry…</div>
             </div>
           ) : (
             <div style={{ overflowX: 'auto' }}>
-              <table className="data-table">
+              <table className="data-table" aria-label="Indian Railways Live Trains Fleet Table">
+                <caption className="sr-only">Active Indian Railways Fleet Telemetry and Safety Status</caption>
                 <thead>
                   <tr>
                     <SortTh k="train_id"       label="TRAIN ID" />

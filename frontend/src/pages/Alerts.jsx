@@ -22,6 +22,11 @@ function AlertRow({ alert, expanded, onClick }) {
     <>
       <tr
         onClick={onClick}
+        role="button"
+        tabIndex={0}
+        aria-expanded={expanded}
+        aria-label={`Alert: ${alert.alert_type || 'Safety Alert'} - Severity ${sev} - Click to toggle details`}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }}
         style={{
           cursor: 'pointer',
           background: expanded ? s.bg : 'transparent',
@@ -218,7 +223,7 @@ export default function Alerts() {
 
             <div className="card">
               {loading ? (
-                <div className="empty-state"><div className="empty-state-sub">Loading alerts…</div></div>
+                <div className="empty-state" role="status" aria-live="polite"><div className="empty-state-sub">Loading alerts…</div></div>
               ) : filtered.length === 0 ? (
                 <div className="empty-state">
                   <div style={{ fontSize: 24, color: 'var(--green)', marginBottom: 8 }}>✓</div>
@@ -227,15 +232,16 @@ export default function Alerts() {
                 </div>
               ) : (
                 <div style={{ overflowX: 'auto' }}>
-                  <table className="data-table">
+                  <table className="data-table" aria-label="Railway Safety Alert History Table">
+                    <caption className="sr-only">Chronological safety alerts and risk events flagged by DRISHTI AI</caption>
                     <thead>
                       <tr>
-                        <th>TIME</th>
-                        <th>SEVERITY</th>
-                        <th>EVENT</th>
-                        <th>LOCATION</th>
-                        <th>ZONE</th>
-                        <th></th>
+                        <th scope="col">TIME</th>
+                        <th scope="col">SEVERITY</th>
+                        <th scope="col">EVENT</th>
+                        <th scope="col">LOCATION</th>
+                        <th scope="col">ZONE</th>
+                        <th scope="col"><span className="sr-only">Actions</span></th>
                       </tr>
                     </thead>
                     <tbody>

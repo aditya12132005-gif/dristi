@@ -19,9 +19,9 @@ function AppLayout() {
   return (
     <>
       <Navbar />
-      <div className="page grid-bg">
+      <main id="main-content" role="main" tabIndex="-1" className="page grid-bg" aria-label="DRISHTI Application Workspace">
         <Outlet />
-      </div>
+      </main>
     </>
   )
 }

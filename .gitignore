@@ -33,7 +33,16 @@ wheels/
 *.swo
 *~
 .DS_Store
+# Cryptographic Keys & Secrets
 /keys
+/keys.pub
+*.pem
+*.key
+*.pub
+id_rsa
+id_ed25519
+credentials.json
+secrets.json
 /backend/alerts/drishti_master.pem
 
 # Node

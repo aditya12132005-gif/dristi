@@ -18,7 +18,14 @@ from sqlalchemy.orm import Session
 from backend.db.models import User
 from backend.db.session import get_db
 
-JWT_SECRET = os.getenv("JWT_SECRET", "change-this-in-production")
+# Cryptographically secure key derivation
+_raw_secret = os.getenv("JWT_SECRET")
+if not _raw_secret or _raw_secret == "change-this-in-production":
+    # Generate high-entropy 256-bit runtime key to prevent forged tokens
+    JWT_SECRET = os.getenv("DRISHTI_SESSION_SECRET", secrets.token_hex(32))
+else:
+    JWT_SECRET = _raw_secret
+
 JWT_ALG = os.getenv("JWT_ALGORITHM", "HS256")
 JWT_EXPIRES_MINUTES = int(os.getenv("JWT_EXPIRES_MINUTES", "60"))
 

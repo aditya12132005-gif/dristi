@@ -73,6 +73,7 @@ function ThemeToggle() {
     <button
       onClick={toggle}
       title={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      aria-label={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       style={{
         display: 'flex', alignItems: 'center', gap: 6,
         padding: '5px 10px',
@@ -133,7 +134,9 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav style={{
+    <nav
+      aria-label="Main Application Navigation"
+      style={{
       position: 'fixed', top: 0, left: 0, right: 0,
       height: 'var(--nav-h)',
       background: 'var(--bg-surface)',
@@ -148,6 +151,7 @@ export default function Navbar() {
       {/* ── Logo / Identity ── */}
       <button
         onClick={() => navigate('/')}
+        aria-label="DRISHTI Railway Intelligence Grid — Navigate to Home"
         style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0, padding: '4px 8px', borderRadius: 'var(--r-sm)', transition: 'background var(--fast)' }}
         onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-raised)'}
         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}

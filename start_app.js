@@ -42,7 +42,7 @@ setTimeout(() => {
 
 // Graceful cleanup
 const cleanUp = () => {
-  try { vite.kill(); } catch (e) {}
+  try { vite.kill(); } catch (e) { }
   process.exit();
 };
 
